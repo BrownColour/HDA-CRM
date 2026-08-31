@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Retainr — Billing &amp; Retainer Tracker</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-mark">●</span>
+        <span class="brand-name">Retainr</span>
+      </div>
+      <nav class="tabs" id="tabs">
+        <button class="tab active" data-view="dashboard">Dashboard</button>
+        <button class="tab" data-view="projects">Projects</button>
+        <button class="tab" data-view="invoices">Invoices</button>
+      </nav>
+      <div class="topbar-actions">
+        <span class="sync-status" id="syncStatus">Loading…</span>
+        <button class="btn btn-ghost" id="syncBtn" title="Generate any due retainer invoices and refresh data">Sync</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="app">
+
+    <!-- ============ DASHBOARD ============ -->
+    <section class="view" id="view-dashboard">
+
+      <div class="hero">
+        <div class="hero-stat">
+          <div class="hero-label">Collected this month</div>
+          <div class="hero-number" id="statCollected">₹0</div>
+          <div class="hero-sub" id="statInvoicedNote">₹0 invoiced this month</div>
+        </div>
+        <div class="hero-chart-card">
+          <div class="chart-legend">
+            <span class="legend-item"><i class="dot dot-collected"></i>Collected</span>
+            <span class="legend-item"><i class="dot dot-invoiced"></i>Invoiced</span>
+            <span class="legend-item"><i class="dot dot-projected"></i>Projected</span>
+          </div>
+          <canvas id="trendChart" height="220"></canvas>
+        </div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-card-label">Outstanding</div>
+          <div class="stat-card-value" id="statOutstanding">₹0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Due in next 30 days</div>
+          <div class="stat-card-value" id="statUpcomingCount">0</div>
+        </div>
+        <div class="stat-card stat-card-warn">
+          <div class="stat-card-label">Overdue</div>
+          <div class="stat-card-value" id="statOverdueCount">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Active projects</div>
+          <div class="stat-card-value" id="statActiveProjects">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Monthly recurring value</div>
+          <div class="stat-card-value" id="statMRV">₹0</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-header">
+            <h3>Upcoming (30 days)</h3>
+          </div>
+          <div class="list" id="upcomingList"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <h3>Overdue</h3>
+          </div>
+          <div class="list" id="overdueList"></div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============ PROJECTS ============ -->
+    <section class="view hidden" id="view-projects">
+      <div class="view-header">
+        <h2>Projects</h2>
+        <button class="btn btn-primary" id="newProjectBtn">New project</button>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table" id="projectsTable">
+          <thead>
+            <tr>
+              <th>Project</th>
+              <th>Client / Billing Entity</th>
+              <th>Fee Basis</th>
+              <th>Amount</th>
+              <th>Cycle</th>
+              <th>Status</th>
+              <th>Contract dates</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ INVOICES ============ -->
+    <section class="view hidden" id="view-invoices">
+      <div class="view-header">
+        <h2>Invoices</h2>
+        <button class="btn btn-primary" id="newInvoiceBtn">New invoice</button>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table" id="invoicesTable">
+          <thead>
+            <tr>
+              <th>Client / Billing Entity</th>
+              <th>Project</th>
+              <th>Period</th>
+              <th>Amount</th>
+              <th>Due date</th>
+              <th>Status</th>
+              <th>Received</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Slide-over panel used for both project and invoice forms -->
+  <div class="overlay" id="overlay"></div>
+  <aside class="side-panel" id="sidePanel">
+    <div class="side-panel-header">
+      <h3 id="sidePanelTitle">New project</h3>
+      <button class="icon-btn" id="closePanelBtn" aria-label="Close">✕</button>
+    </div>
+    <div class="side-panel-body" id="sidePanelBody"></div>
+  </aside>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
